@@ -37,21 +37,16 @@ def checkBox(i, j, k):
 
 def dfs(i, j):
 	global li
-	global flag
 	if (i == 9):
 		print_answer()
-		flag = 1
+		exit()
 	else:
 		if (li[i][j] != 0):
 			# 다음으로 넘어가기
 			if (j == 8):
 				dfs(i + 1, 0)
-				if (flag == 1):
-					return 
 			else:
 				dfs(i, j + 1)
-				if (flag == 1):
-					return 
 		else:
 			for k in range(1, 10):
 				#같은 가로줄, 세로줄, 박스안 체크
@@ -62,13 +57,8 @@ def dfs(i, j):
 				# 다음으로 넘어가기
 				if (j == 8):
 					dfs(i + 1, 0)
-					if (flag == 1):
-						return 
 				else:
 					dfs(i, j + 1)
-					if (flag == 1):
-						return 
 				li[i][j] = 0
 
-flag = 0
 dfs(0, 0)
