@@ -41,7 +41,6 @@ def cnt(i, j):
 	return (tmp)
 
 flag = 0
-#보통의경우
 for i in range(n):
 	for j in range(n):
 		if (player[i][j] == 'x' and game[i][j] == '.'):
@@ -56,4 +55,4 @@ if (flag == 1):
 
 #정답 출력
 for i in range(n):
-	print(*answer[i])
+    print("".join(map(str, answer[i])))
