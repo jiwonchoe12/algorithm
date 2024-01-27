@@ -1,26 +1,31 @@
 import sys
+import heapq
 
 N, K = map(int, sys.stdin.readline().split())
 jewels = []
 for _ in range(N):
 	M, V = map(int, sys.stdin.readline().split())
-	jewels.append([M, V, V/M]) # 무게, 가격, 무게 별 가격
+	jewels.append([M, V]) # 무게, 가격
 
-jewels.sort(key = lambda x : (-x[2]))
+jewels.sort() #무게 낮은 순으로 정렬
 
 bags = []
 for _ in range(K):
 	C = int(sys.stdin.readline())
 	bags.append(C)
-bags.sort()
+bags.sort() #무게 낮은 순으로 정렬
 
 prices = 0
-for jewel in jewels:
-	if (len(bags) == 0):
-		break
-	for i in range(len(bags)):
-		if (bags[i] >= jewel[0]): #보석을 다 넣는경우
-			prices += jewel[1]
-			bags.pop(i)
-			break
+max_heap = [] #가방에 담을 수 있는 주얼리를 저장
+bag_idx = 0
+jewel_idx = 0
+
+while (bag_idx < K):
+	if (jewel_idx < N and bags[bag_idx] >= jewels[jewel_idx][0]): #가방에 담을 수 있다면
+		heapq.heappush(max_heap, (-jewels[jewel_idx][1], jewels[jewel_idx][1]))
+		jewel_idx += 1
+	else:
+		if (len(max_heap) != 0):
+			prices += heapq.heappop(max_heap)[1]
+		bag_idx += 1
 print(prices)
